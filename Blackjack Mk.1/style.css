@@ -1,0 +1,130 @@
+body {
+    margin: 0;
+    background: url(green.jpg);
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type="text"] {
+    font-size: 25px;
+    border-radius: 17px;
+    padding: 8px;
+    margin: 12px;
+}
+
+button {
+    padding: 15px;
+    font-size: 24px;
+    display: block;
+    margin: auto;
+    width: 75px;
+    font-size: 36px;
+    width: 195px;
+    background-color: goldenrod;
+    color: #016F32;
+    border-radius: 25px;
+}
+
+div.playerCards {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+button.playerMovesBtn {
+    display: inline;
+    margin: 15px;
+}
+div.openDialogue {
+    background-color: burlywood;
+    background: url(wood.jpg);
+    padding: 15px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+div.dialogueDiv {
+    text-align: center;
+}
+
+div.dialogueDiv.clicked {
+    display: none;
+}
+
+img.cardImg {
+    height: auto;
+    width: 140px;
+    padding: 5px 10px 5px 10px;
+}
+label {
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0;
+    display: block;
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+div.gameWindow {
+    display: none;
+}
+
+div.active {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: left;
+    justify-content: center;
+}
+
+div.betWindow {
+    text-align: center;
+}
+
+.container {
+    margin: auto;
+    width: 100%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+}
+h1 {
+    display: block;
+    text-align: center;
+    font-size: 76px;
+}
+
+h2 {
+    font-size: 55px;
+    text-align: center;
+}
+
+input {
+    color: black;
+}
+
+@media screen and (max-width:680px) {
+    .col-3 {
+        width: 100%;
+    }
+}
