@@ -1,5 +1,7 @@
 body {
     margin: 0;
+    height: 100%;
+    width: 100%;
     background: url(green.jpg);
     background-color: black;
     background-repeat: no-repeat;
@@ -28,6 +30,10 @@ button {
     border-radius: 25px;
 }
 
+button:disabled {
+    background-color: #ccc;
+}
+
 div.playerCards {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -40,7 +46,26 @@ button.playerMovesBtn {
     display: inline;
     margin: 15px;
 }
-div.openDialogue {
+
+
+
+div.betDialogue {
+    display: none;
+}
+
+div.betDialogue.betNotSet {
+    display:block;
+}
+
+div.dialogueDiv {
+    text-align: center;
+}
+
+div.openDialogue.clicked {
+    display:none;
+}
+
+div.openDialogue, div.betDialogue {
     background-color: burlywood;
     background: url(wood.jpg);
     padding: 15px;
@@ -48,11 +73,7 @@ div.openDialogue {
     text-align: center;
 }
 
-div.dialogueDiv {
-    text-align: center;
-}
-
-div.dialogueDiv.clicked {
+div.betDialogue.betSet {
     display: none;
 }
 
@@ -105,7 +126,7 @@ div.betWindow {
 .container {
     margin: auto;
     width: 100%;
-    padding-top: 4%;
+    padding-top: 1%;
     padding-bottom: 4%;
 }
 h1 {

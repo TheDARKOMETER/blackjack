@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="style.css">
@@ -11,42 +12,59 @@
     <h1 id="title">Welcome to Blackjack!</h1>
     </header>
     <div class="container">
+        <div class="col-12">
         <div class="row">
-            <!-- <div class="dialogueDiv" id="opDia">
-                <div class="openDialogue">
+            <div class="dialogueDiv" id="opDia">
+                <div class="openDialogue" id="nameDia">
                     <form>
                             <h2>Enter name</h1>
                             <input class="inputbox" name="username" type="text" placeholder="Name" id="nameTxtBox">
                             <button class="playBtn" type="button" id="play">Play</button>
                     </form>
                 </div>
-            </div> -->
-            <div class="openDialogue" id="betWindowElement">
-                <div>
-                    <h2>Enter bet amount: </h2>
-                </div>
-                <div>
-                    <form>
-                        <input class="inputbox" name="betamount" type="text" placeholder="Enter Amount" id="betAmountTxtBox">
-                        <button class="setAmountBtn" type="button" id="setAmount">Set Amount</button>
-                    </form>
+            <div class="betDialogue" id="betWindowElement">
+                    <div>
+                        <h2>Enter bet amount: </h2>
+                    </div>
+                    <div>
+                        <form>
+                            <input class="inputbox" name="betamount" type="text" placeholder="Enter Amount" id="betAmountTxtBox">
+                            <button class="setAmountBtn" type="button" id="setAmount">Set Amount</button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="gameWindow" id="gameWindowElement">
-                <div class="playerName">
-                    <h2 id="playerNameElement"></h2>
-                </div>
+                <div class="playerStuff" id="playerStuffElement">
+                    <div class="playerName" id = "playerNameDivElement">
+                        <h2 id="playerNameElement"></h2>
+                        <h3 id="playerBetAmount"></h3>
+                    </div>
                     <div class="playerCards" id="playerCardElement">
 
                     </div>
                     <div class="playerSum">
                         <label id="playerSumElement">Sum: </label>
                     </div>
-                    <div class="playerMoves">
+                    <div class="playerMoves" id ="playerMoveDiv">
                         <button class="playerMovesBtn" type="button" onclick="hitMove()" id="hitBtnElement">Hit</button>
                         <button class="playerMovesBtn" onclick="standMove()" id="standBtnElement">Stand</button>
                     </div>
+                <div class="enemyStuff" id="enemyStuffElement">
+                    <div class="enemyName" id="enemyNameElement">
+                        <h2 id="enemyNameElement">Dealer: </h2>
+                    </div>
+                    <div class="dealerCards" id="dealerCardElement">
+
+                    </div>
+                    <div class="dealerSum">
+                        <label id="dealerSumElement">Sum: </label>
+                    </div>
+                </div>
+
             </div>
+            </div>
+        </div>
         </div>
     </div>
     <script src="blackjackscript.js"></script>
