@@ -10,7 +10,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
     font-size: 25px;
     border-radius: 17px;
     padding: 8px;

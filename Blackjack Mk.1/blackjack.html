@@ -28,13 +28,24 @@
                     </div>
                     <div>
                         <form>
-                            <input class="inputbox" name="betamount" type="text" placeholder="Enter Amount" id="betAmountTxtBox">
+                            <input class="inputbox" name="betamount" type="number" placeholder="Enter Amount" id="betAmountTxtBox">
                             <button class="setAmountBtn" type="button" id="setAmount">Set Amount</button>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="gameWindow" id="gameWindowElement">
+                <div class="enemyStuff" id="enemyStuffElement">
+                    <div class="enemyName" id="enemyNameElement">
+                        <h2 id="enemyNameElement">Dealer: </h2>
+                    </div>
+                    <div class="dealerCards" id="dealerCardElement">
+
+                    </div>
+                    <div class="dealerSum">
+                        <label id="dealerSumElement">Sum: </label>
+                    </div>
+                </div>
                 <div class="playerStuff" id="playerStuffElement">
                     <div class="playerName" id = "playerNameDivElement">
                         <h2 id="playerNameElement"></h2>
@@ -50,18 +61,6 @@
                         <button class="playerMovesBtn" type="button" onclick="hitMove()" id="hitBtnElement">Hit</button>
                         <button class="playerMovesBtn" onclick="standMove()" id="standBtnElement">Stand</button>
                     </div>
-                <div class="enemyStuff" id="enemyStuffElement">
-                    <div class="enemyName" id="enemyNameElement">
-                        <h2 id="enemyNameElement">Dealer: </h2>
-                    </div>
-                    <div class="dealerCards" id="dealerCardElement">
-
-                    </div>
-                    <div class="dealerSum">
-                        <label id="dealerSumElement">Sum: </label>
-                    </div>
-                </div>
-
             </div>
             </div>
         </div>

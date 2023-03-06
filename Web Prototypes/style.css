@@ -71,12 +71,12 @@ footer.footer {
 }
 
 footer.footer ul {
-    list-style: none;
-    text-align: left;
     padding-left: 0;
 }
 
 footer.footer ul li {
+    list-style: none;
+    text-align: left;
     color:white;
 }
 

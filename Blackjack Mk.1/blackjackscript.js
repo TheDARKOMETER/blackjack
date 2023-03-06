@@ -19,6 +19,7 @@ var playerCards
 var playerCash = 5000
 var dealerCards
 var dealerSum
+var standMove = false
 const retryButton = document.createElement("button")
 const winOrLose = document.createElement("h3")
 retryButton.innerHTML = "Retry"
@@ -40,6 +41,7 @@ function Student(first, last, age) {
 } */
 
 class Cards {
+    // These are class instance fields
     cardTypes = ["clubs", "diamonds", "hearts", "spades"]
     randCardType = this.cardTypes[Math.floor(Math.random() * (4 - 0) + 0)] 
     cardset = {
@@ -61,6 +63,10 @@ class Cards {
     cardHtml() {
         let cardInfo = this.cardset[this.cardValue]
         return `<img class="cardImg" src="cards/${cardInfo}" title="${cardInfo}">`
+    }
+
+    static hiddenCard() {
+        return `<img class="cardImg" src="cards/back.png" title="hidden">`
     }
 
     cardProperties() {
@@ -97,8 +103,8 @@ betBtn.addEventListener("click", function(){
         betDialogue.className = "betDialogue betSet"
         gameWindow.className += " active"
         betAmount = betInput.value
-        document.getElementById("playerNameElement").innerHTML = `${playerName}: ${playerCash}`
-        document.getElementById("playerBetAmount").innerHTML = `Bet: ${betAmount}`
+        document.getElementById("playerNameElement").innerHTML = `${playerName}: $${playerCash}`
+        document.getElementById("playerBetAmount").innerHTML = `Bet: $${betAmount}`
         initPlayerCards()
         initDealerCards()
         renderCards(playerCardsDiv, playerCards)
@@ -116,6 +122,7 @@ function hitMove() {
     playerCardsDiv.innerHTML += newCard.cardHtml()
     renderPlayerSum()
     renderGame()
+    hideDealerCard()
 }
 
 function standMove() {
@@ -123,10 +130,20 @@ function standMove() {
     
 }
 
+// Here's where you will do the hide dealer 1st card thingy
 function renderCards(cardsDiv, cards) {
     cardsDiv.innerHTML = ""
-    for (let i = 0; i < playerCards.length; i++) {
-        cardsDiv.innerHTML += cards[i].cardHtml()
+    if (cardsDiv.className === "dealerCards") {
+        if (!standMove) {
+            cardsDiv.innerHTML = Cards.hiddenCard()
+            for (let i = 1; i < cards.length; i++) {
+                cardsDiv.innerHTML += cards[i].cardHtml()
+            }
+        }
+    } else {
+        for (let i = 0; i < cards.length; i++) {
+            cardsDiv.innerHTML += cards[i].cardHtml()
+        }
     }
     renderPlayerSum()
     renderDealerSum()
@@ -142,8 +159,14 @@ function renderPlayerSum() {
 
 function renderDealerSum() {
     dealerSum = 0
-    for (let i = 0; i < dealerCards.length; i++) {
-        dealerSum += Cards.cardVal(dealerCards[i])
+    if (!standMove) {
+        for (let i = 1; i < dealerCards.length; i++) {
+            dealerSum += Cards.cardVal(dealerCards[i])
+        }
+    } else {
+        for (let i = 0; i < dealerCards.length; i++) {
+            dealerSum += Cards.cardVal(dealerCards[i])
+        }
     }
     dealerSumLabel.innerHTML = `Sum: ${dealerSum}`
 }
@@ -180,4 +203,8 @@ function winEvent() {
 
 function betPrompt() {
     
+}
+
+function hideDealerCard(){
+    console.log(dealerCards[0].cardHtml())
 }
