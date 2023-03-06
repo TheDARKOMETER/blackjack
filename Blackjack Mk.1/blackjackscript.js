@@ -20,6 +20,7 @@ var playerCash = 5000
 var dealerCards
 var dealerSum
 var standMove = false
+var playerHasAce = false
 const retryButton = document.createElement("button")
 const winOrLose = document.createElement("h3")
 retryButton.innerHTML = "Retry"
@@ -45,6 +46,7 @@ class Cards {
     cardTypes = ["clubs", "diamonds", "hearts", "spades"]
     randCardType = this.cardTypes[Math.floor(Math.random() * (4 - 0) + 0)] 
     cardset = {
+        1:`ace_of_${this.randCardType}.png`,
         2:`2_of_${this.randCardType}.png`,
         3:`3_of_${this.randCardType}.png`,
         4:`4_of_${this.randCardType}.png`,
@@ -99,7 +101,7 @@ playBtn.addEventListener("click", function(){
 })
 
 betBtn.addEventListener("click", function(){
-    if (betDialogue.className==="betDialogue betNotSet" && betInput.value.match("^[0-9]*$")) {
+    if (betDialogue.className==="betDialogue betNotSet" && betInput.value.match("^[0-9]*$") && betInput.value != "") {
         betDialogue.className = "betDialogue betSet"
         gameWindow.className += " active"
         betAmount = betInput.value
@@ -120,6 +122,7 @@ function hitMove() {
     let newCard = new Cards(Math.floor(Math.random() * (12 - 2) + 2))
     playerCards.push(newCard)
     playerCardsDiv.innerHTML += newCard.cardHtml()
+    renderCards(playerCardsDiv, playerCards)
     renderPlayerSum()
     renderGame()
     hideDealerCard()
@@ -143,6 +146,9 @@ function renderCards(cardsDiv, cards) {
     } else {
         for (let i = 0; i < cards.length; i++) {
             cardsDiv.innerHTML += cards[i].cardHtml()
+            if (cards[i].cardValue === 11) {
+                playerHasAce = true
+            }
         }
     }
     renderPlayerSum()
@@ -153,8 +159,24 @@ function renderPlayerSum() {
     playerSum = 0
     for (let i = 0;  i < playerCards.length; i++) {
         playerSum += Cards.cardVal(playerCards[i])
+        if (playerSum > 21 && playerHasAce) {
+            alert("playersum > 21")
+            convertAce()
+        }
     }
-    sumLabel.innerHTML = `Sum: ${playerSum}`
+    sumLabel.innerHTML = (playerHasAce) ? `Sum: ${playerSum-10} / ${playerSum}` : `Sum: ${playerSum}`
+}
+
+function convertAce() {
+    for (let i = 0; i < playerCards.length; i++) {
+        if (playerCards[i].cardValue === 11) {
+            playerCards[i].cardValue = 1
+            alert("converting ace val to 1")
+            playerHasAce = false
+            renderCards(playerCardsDiv, playerCards)
+            break
+        }
+    }
 }
 
 function renderDealerSum() {
