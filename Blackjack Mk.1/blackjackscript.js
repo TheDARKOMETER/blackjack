@@ -19,7 +19,7 @@ var playerCards
 var playerCash = 5000
 var dealerCards
 var dealerSum
-var standMove = false
+var isPlayerStand = false
 var playerHasAce = false
 const retryButton = document.createElement("button")
 const winOrLose = document.createElement("h3")
@@ -125,21 +125,38 @@ function hitMove() {
     renderCards(playerCardsDiv, playerCards)
     renderPlayerSum()
     renderGame()
-    hideDealerCard()
+}
+
+
+function dealerHitMove() {
+    let newCard = new Cards(Math.floor(Math.random() * (12 - 2) + 2))
+    dealerCards.push(newCard)
+    dealerCardsDiv.innerHTML += newCard.cardHtml()
+    renderCards(dealerCardsDiv, dealerCards)
+    renderDealerSum()
+    renderGame()
 }
 
 function standMove() {
     let newCard = new Cards(Math.floor(Math.random() * (12 - 2) + 2))
-    
+    isPlayerStand = true
+    renderCards(dealerCardsDiv, dealerCards)
+    while (dealerSum < playerSum || dealerSum < 21) {
+        dealerHitMove()
+    }
 }
 
 // Here's where you will do the hide dealer 1st card thingy
 function renderCards(cardsDiv, cards) {
     cardsDiv.innerHTML = ""
     if (cardsDiv.className === "dealerCards") {
-        if (!standMove) {
+        if (!isPlayerStand) {
             cardsDiv.innerHTML = Cards.hiddenCard()
             for (let i = 1; i < cards.length; i++) {
+                cardsDiv.innerHTML += cards[i].cardHtml()
+            }
+        } else {
+            for (let i = 0; i < cards.length; i++) {
                 cardsDiv.innerHTML += cards[i].cardHtml()
             }
         }
@@ -181,7 +198,7 @@ function convertAce() {
 
 function renderDealerSum() {
     dealerSum = 0
-    if (!standMove) {
+    if (!isPlayerStand) {
         for (let i = 1; i < dealerCards.length; i++) {
             dealerSum += Cards.cardVal(dealerCards[i])
         }
@@ -225,8 +242,4 @@ function winEvent() {
 
 function betPrompt() {
     
-}
-
-function hideDealerCard(){
-    console.log(dealerCards[0].cardHtml())
 }
