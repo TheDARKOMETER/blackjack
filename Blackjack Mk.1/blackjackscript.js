@@ -21,6 +21,8 @@ var dealerCards
 var dealerSum
 var isPlayerStand = false
 var playerHasAce = false
+var blackJackSum = false
+var gameEnded = false
 const retryButton = document.createElement("button")
 const winOrLose = document.createElement("h3")
 retryButton.innerHTML = "Retry"
@@ -113,8 +115,6 @@ betBtn.addEventListener("click", function(){
         renderCards(dealerCardsDiv, dealerCards)
     } else {
         betDialogue.className = "betDialogue betNotSet"
-        gameWindow.className = "gameWindow" 
-        alert(`'Please enter a valid bet amount'`)
     }
  })
 
@@ -128,22 +128,27 @@ function hitMove() {
 }
 
 
+
+
 function dealerHitMove() {
     let newCard = new Cards(Math.floor(Math.random() * (12 - 2) + 2))
     dealerCards.push(newCard)
     dealerCardsDiv.innerHTML += newCard.cardHtml()
     renderCards(dealerCardsDiv, dealerCards)
     renderDealerSum()
-    renderGame()
 }
+const timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-function standMove() {
+async function standMove() {
+    toggleBtn()
     let newCard = new Cards(Math.floor(Math.random() * (12 - 2) + 2))
     isPlayerStand = true
     renderCards(dealerCardsDiv, dealerCards)
-    while (dealerSum < playerSum || dealerSum < 21) {
+    while (dealerSum < playerSum) {
+        await timeout(1000)
         dealerHitMove()
     }
+    renderGame()
 }
 
 // Here's where you will do the hide dealer 1st card thingy
@@ -177,7 +182,6 @@ function renderPlayerSum() {
     for (let i = 0;  i < playerCards.length; i++) {
         playerSum += Cards.cardVal(playerCards[i])
         if (playerSum > 21 && playerHasAce) {
-            alert("playersum > 21")
             convertAce()
         }
     }
@@ -188,7 +192,6 @@ function convertAce() {
     for (let i = 0; i < playerCards.length; i++) {
         if (playerCards[i].cardValue === 11) {
             playerCards[i].cardValue = 1
-            alert("converting ace val to 1")
             playerHasAce = false
             renderCards(playerCardsDiv, playerCards)
             break
@@ -211,9 +214,19 @@ function renderDealerSum() {
 }
 
 function renderGame() { 
-    if (playerSum > 21) {
-        loseEvent()
-    } 
+    if (!isPlayerStand) {
+        if (playerSum > 21) {
+            loseEvent()
+        }
+    } else {
+        if (playerSum > 21 || dealerSum > playerSum && dealerSum <= 21) {
+            loseEvent()
+        } else if (playerSum === dealerSum) {
+            pushEvent()
+        } else {
+            winEvent()
+        }
+    }
 }
 
 function loseEvent() {
@@ -221,8 +234,40 @@ function loseEvent() {
     playerCash -= betAmount
     playerMovesDiv.appendChild(retryButton)
     playerNameDiv.appendChild(winOrLose)
-    hitBtn.disabled = true
-    standBtn.disabled = true
+    gameEnded = true
+    toggleBtn()
+}
+
+function pushEvent() {
+    winOrLose.innerHTML = "Push"
+    playerMovesDiv.appendChild(retryButton)
+    playerNameDiv.appendChild(winOrLose)
+    gameEnded = true
+    toggleBtn()
+}
+
+function winEvent() {
+    blackJackSum = (playerSum === 21) ? blackJackSum = true : blackJackSum = false
+    betAmount = (blackJackSum) ? betAmount * 1.5 : betAmount
+    winOrLose.innerHTML = "You Win"
+    playerCash += parseInt(betAmount)
+    playerMovesDiv.appendChild(retryButton)
+    playerNameDiv.appendChild(winOrLose)
+    gameEnded = true
+    toggleBtn()
+}
+
+
+
+function toggleBtn() {
+    playerHasAce = false
+    if (isPlayerStand || gameEnded) {
+        hitBtn.disabled = true
+        standBtn.disabled = true 
+    } else {
+        hitBtn.disabled = false
+        standBtn.disabled = false
+    }
 }
 
  function retry() {
@@ -231,14 +276,12 @@ function loseEvent() {
     playerCards = []
     playerMovesDiv.removeChild(retryButton)
     playerNameDiv.removeChild(winOrLose)
-    hitBtn.disabled = false
-    standBtn.disabled = false
+    isPlayerStand = false
+    gameEnded = false
+    toggleBtn()
  }
 
 
-function winEvent() {
-
-}
 
 function betPrompt() {
     
