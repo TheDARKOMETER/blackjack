@@ -144,7 +144,7 @@ async function standMove() {
     let newCard = new Cards(Math.floor(Math.random() * (12 - 2) + 2))
     isPlayerStand = true
     renderCards(dealerCardsDiv, dealerCards)
-    while (dealerSum < playerSum) {
+    while (dealerSum < 16 && dealerSum != 17) {
         await timeout(1000)
         dealerHitMove()
     }
